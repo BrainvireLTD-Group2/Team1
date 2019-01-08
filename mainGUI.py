@@ -32,9 +32,16 @@ class Application:
         self.btnLogin = tk.Button(root, text = "Login", command = self.btnLogin_clicked)
         self.btnLogin.grid(row = 2, column = 0)
 
+        self.btnPolicy = tk.Button(root, text = "Policy", command = self.btnPolicy_clicked)
+        self.btnPolicy.grid(row = 2, column = 1)
+
         self.btnExit = tk.Button(root, text = "Exit", command = self.btnExit_clicked)
-        self.btnExit.grid(row = 2, column = 1)
-        
+        self.btnExit.grid(row = 2, column = 2)
+
+    def btnPolicy_clicked(self):
+        self.policytext = "This is a placeholder for the policy"
+        tk.messagebox.showinfo(title = "Ufix Policy Document", message = self.policytext)
+
     def btnLogin_clicked(self):
         inserted_username = self.txtUsername.get()
         inserted_password = self.txtPassword.get()
@@ -46,8 +53,6 @@ class Application:
         database.connect()
         if database.verify(str(inserted_username), str(inserted_password)) == True:
             print("Enter Main Gui")
-        else:
-            print("Wrong")
 
     def btnExit_clicked(self):
         self.choice = tk.messagebox.askquestion('Ufix Login', 'Are you sure you want to exit?', icon="warning")
@@ -69,14 +74,11 @@ class DatabaseAccessor:
         self.all_accounts = self.cursor.fetchall()
 
         for row in self.all_accounts:
-            print(username + ' ' + passwordhash)
             if str(username) == str(row[0]) and str(passwordhash) == str(row[1]):
                 print("Username & Password correct")
                 return True
-
+        tk.messagebox.showerror(title = "Login error", message = "Incorrect Username/Password!")
         return False
-
-
 
 if __name__ == '__main__':
     root = tk.Tk()
