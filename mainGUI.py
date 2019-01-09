@@ -53,7 +53,7 @@ class Application:
         database.connect()
         if database.verify(str(inserted_username), str(inserted_password)) == True:
             print("Enter Main Gui")
-        database.disconnect()
+        #database.disconnect() # Does not work :(
 
     def btnExit_clicked(self):
         self.choice = tk.messagebox.askquestion('Ufix Login', 'Are you sure you want to exit?', icon="warning")
