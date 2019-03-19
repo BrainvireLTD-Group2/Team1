@@ -28,7 +28,7 @@ You'll need to make sure your program accounts for directory handling as the fil
 │       ├── payroll
 |       |
 │       ├── pim
-|       |to
+|       |
 │       ├── recruitment
 |       |
 │       └── system
