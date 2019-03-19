@@ -28,7 +28,7 @@ You'll need to make sure your program accounts for directory handling as the fil
 │       ├── payroll
 |       |
 │       ├── pim
-|       |
+|       |to
 │       ├── recruitment
 |       |
 │       └── system
@@ -36,7 +36,7 @@ You'll need to make sure your program accounts for directory handling as the fil
 
 `system` is the main directory for the program. The `UFIX.exe` file will launch the mainGUI.py script in `system` - which will show the login page.
 
-You need to make sure when you are calling other people's code or files for whatever reason within your python script you need to account for this folder structure. It maybe worth running this script to create a test environment for your code.
+You need to make sure when you are calling other people's code or files for whatever reason within your python script you account for this folder structure. It maybe worth running this script to create a test environment for your code.
 
 ***
 
