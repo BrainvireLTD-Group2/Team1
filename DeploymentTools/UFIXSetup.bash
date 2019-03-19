@@ -1,12 +1,12 @@
 #!/bin/bash
-
+clear
 # Check if PWD is already a UFIX project.
 if [ -d "sources" ]; then
   echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
   echo -ne ":: Warning\n\n\n"
   echo -ne ":: A project already exists in this directory!\n"
 
-  echo -n "Do you want to overwrite this project (y/n)? \n"
+  echo -n "Do you want to overwrite this project (y/n)?"
   read answer
 
   if [ "$answer" != "${answer#[Yy]}" ] ;then
