@@ -49,27 +49,6 @@ PROJECT_SETUP=($BoardingDir $DisciplinaryDir $LeaveDir $PayrollDir $PIMDir $Recr
 
 clear
 
-echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-echo -ne ":: Pre setup checks.\n\n\n"
-echo -ne ":: Checking if ${YELLOW}Python${NO_COLOR} is installed...\n\n"
-sleep 0.5
-
-if command -v python3; then
-	clear
-    echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-    echo -ne ":: Pre setup checks.\n\n\n"
-    echo -ne ":: ${YELLOW}Python is installed.${NO_COLOR}\n\n"
-    sleep 1
-else
-	clear
-	echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-    echo -ne ":: Pre setup checks.\n\n\n"
-    echo -ne ":: ${CYAN} Python is not installed.${NO_COLOR}\n"
-    echo -ne ":: Please install Python 3.x.x before running this script.\n"
-    echo -ne ":: ${YELLOW} https://www.python.org/downloads/${NO_COLOR}\n\n"
-    exit 0
-fi
-
 clear
 echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
 echo -ne ":: Pre setup checks.\n\n\n"
