@@ -14,13 +14,13 @@ namespace UFIXBootstrap
             switch (Platform)
             {
                 case PlatformID.MacOSX:
-                    Process.StartInfo.FileName = "python";
+                    Process.StartInfo.FileName = "pythonw";
                     break;
                 case PlatformID.Unix:
-                    Process.StartInfo.FileName = "python";
+                    Process.StartInfo.FileName = "pythonw";
                     break;
                 case PlatformID.Win32NT:
-                    Process.StartInfo.FileName = "python.exe";
+                    Process.StartInfo.FileName = "pythonw.exe";
                     break;
                 default:
                     Console.WriteLine("This is an unsupported platform.");
@@ -29,7 +29,7 @@ namespace UFIXBootstrap
 
             Process.StartInfo.RedirectStandardOutput = true;
             Process.StartInfo.UseShellExecute = false;
-            Process.StartInfo.Arguments = "sources/python/system/mainGUI.py";
+            Process.StartInfo.Arguments = "sources/python/system/mainGUI.pyw";
             Process.Start();
         }
     }
