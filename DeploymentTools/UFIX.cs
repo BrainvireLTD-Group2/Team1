@@ -14,13 +14,13 @@ namespace UFIXBootstrap
             switch (Platform)
             {
                 case PlatformID.MacOSX:
-                    Process.StartInfo.FileName = "python3";
+                    Process.StartInfo.FileName = "python";
                     break;
                 case PlatformID.Unix:
-                    Process.StartInfo.FileName = "python3";
+                    Process.StartInfo.FileName = "python";
                     break;
                 case PlatformID.Win32NT:
-                    Process.StartInfo.FileName = "python3.exe";
+                    Process.StartInfo.FileName = "python.exe";
                     break;
                 default:
                     Console.WriteLine("This is an unsupported platform.");
