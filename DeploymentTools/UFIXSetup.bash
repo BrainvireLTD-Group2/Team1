@@ -198,7 +198,7 @@ sleep 1
 clear
 
 echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-echo -ne ":: Projcet setup completed.\n"
+echo -ne ":: Project setup completed.\n"
 echo -ne ":: Run the ${YELLOW}UFIX.exe${NO_COLOR} file to run the program.\n"
 echo -ne ":: Run this script again to update.\n\n\n\n"
 
