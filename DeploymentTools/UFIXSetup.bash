@@ -169,6 +169,7 @@ rm -f LICENSE
 rm -f .gitignore
 sleep 0.3
 cd $AdminDir
+mv UfixAccounts.sqlite3 ../
 cd DeploymentTools
 mv UFIX.exe ../../../
 cd ..
@@ -189,7 +190,9 @@ mv $RecruitmentDir recruitment
 sleep 0.3
 mv $AdminDir system
 sleep 0.3
+mv UfixAccounts.sqlite3 ../
 cd ..
+mv UfixAccounts.sqlite3 ../
 mv $UfixDir python
 mkdir sources
 mv python ./sources
@@ -198,7 +201,7 @@ sleep 1
 clear
 
 echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-echo -ne ":: Project setup completed.\n"
+echo -ne ":: Projcet setup completed.\n"
 echo -ne ":: Run the ${YELLOW}UFIX.exe${NO_COLOR} file to run the program.\n"
 echo -ne ":: Run this script again to update.\n\n\n\n"
 
