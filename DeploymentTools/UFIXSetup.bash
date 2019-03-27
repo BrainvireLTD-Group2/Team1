@@ -115,7 +115,7 @@ for Working in "${PROJECT_SETUP[@]}"
 do
 	echo -ne ":: Cleaning: ${YELLOW}" $Working "${NO_COLOR}                    \r\c\n"
 	cd $Working
-	rm -rf .idea *.md .git
+	rm -rfv .idea *.md .git
 	cd ..
 	sleep 0.05
 done
@@ -134,7 +134,7 @@ do
 	fi
 
 	echo -ne ":: Setting up: ${YELLOW}" $Working "${NO_COLOR}                        \r\c\n"
-	cp -rf $Working $UfixDir
+	cp -rfv $Working $UfixDir
 	sleep 0.25
 done
 
@@ -152,7 +152,7 @@ do
 	fi
 
 	echo -ne ":: Cleaning: ${YELLOW}" $Cleaning "${NO_COLOR}                          \r\c\n"
-	rm -rf $Cleaning
+	rm -rfv $Cleaning
 	sleep 0.25
 done
 
@@ -165,43 +165,104 @@ echo -ne ":: Preparing project structure...\n\n\n\n"
 sleep 0.3
 
 cd $UfixDir
-rm -f LICENSE
-rm -f .gitignore
-sleep 0.3
-cd $AdminDir
-mv UfixAccounts.sqlite3 ../
-cd DeploymentTools
-mv UFIX.exe ../../../
-cd ..
-rm -rf DeploymentTools
-cd ..
-sleep 0.3
-mv $BoardingDir boarding
-sleep 0.3
-mv $DisciplinaryDir disciplinary
-sleep 0.3
-mv $LeaveDir leave
-sleep 0.3
-mv $PayrollDir payroll
-sleep 0.3
-mv $PIMDir pim
-sleep 0.3
-mv $RecruitmentDir recruitment
-sleep 0.3
-mv $AdminDir system
-sleep 0.3
-mv UfixAccounts.sqlite3 ../
-cd ..
-mv UfixAccounts.sqlite3 ../
-mv $UfixDir python
-mkdir sources
-mv python ./sources
-sleep 0.3
+rm -fv LICENSE
+rm -fv .gitignore
 sleep 1
+
+if [ "$(ls -A $AdminDir)" ]; then
+    echo -ne "[clWorker] Object: $AdminDir Op: moving required files.							                      \n"
+    cd $AdminDir
+	mv -v UfixAccounts.sqlite3 ../../
+	cd DeploymentTools
+	mv -v UFIX.exe ../../../
+	cd ..
+	rm -rfv DeploymentTools
+	cd ..
+	mv $AdminDir system
+else
+    echo -ne  "[Warning] $AdminDir is empty... deleting.								                              \n"
+	rm -rfv $AdminDir
+fi
+
+sleep 1
+
+if [ "$(ls -A $BoardingDir)" ]; then
+    echo -ne  "[clWorker] Object: $BoardingDir Op: moving required files.							                  \n"
+	mv -v $BoardingDir boarding
+else
+    echo -ne  "[Warning] $BoardingDir is empty... deleting.								                              \n"
+	rm -rfv $BoardingDir
+fi
+
+sleep 1
+
+if [ "$(ls -A $DisciplinaryDir)" ]; then
+    echo -ne  "[clWorker] Object: $DisciplinaryDir Op: moving required files.                                         \n"
+	mv $DisciplinaryDir disciplinary
+else
+    echo -ne  "[Warning] $DisciplinaryDir is empty... deleting.                                                       \n"
+	rm -rfv $DisciplinaryDir
+fi
+
+sleep 1
+
+if [ "$(ls -A $LeaveDir)" ]; then
+    echo -ne  "[clWorker] Object: $LeaveDir Op: moving required files.							                      \n"
+	mv -v $LeaveDir leave
+else
+    echo -ne  "[Warning] $LeaveDir is empty... deleting.								                              \n"
+	rm -rfv $LeaveDir
+fi
+
+sleep 1
+
+if [ "$(ls -A $PayrollDir)" ]; then
+    echo -ne  "[clWorker] Object: $PayrollDir Op: moving required files.							                  \n"
+	mv -v $PayrollDir payroll
+else
+    echo -ne  "[Warning] $PayrollDir is empty... deleting.								                              \n"
+	rm -rfv $PayrollDir
+fi
+
+sleep 1
+
+if [ "$(ls -A $PIMDir)" ]; then
+    echo -ne  "[clWorker] Object: $PIMDir Op: moving required files.							                      \n"
+	mv -v $PIMDir pim
+else
+    echo -ne  "[Warning] $PIMDir is empty... deleting.								                                  \n"
+	rm -rfv $PIMDir
+fi
+
+sleep 1
+
+if [ "$(ls -A $RecruitmentDir)" ]; then
+    echo -ne  "[clWorker] Object: $RecruitmentDir Op: moving required files.							              \n"
+	mv -v $RecruitmentDir recruitment
+else
+    echo -ne  "[Warning] $RecruitmentDir is empty... deleting.								                          \n"
+	rm -rfv $RecruitmentDir
+fi
+
+sleep 1
+
+cd ..
+
+sleep 1
+
+echo -ne  "[clWorker] Creating sources directory.							                                          \n"
+mv -v $UfixDir python
+mkdir -v sources
+mv -v python ./sources
+
+echo -ne  "[clWorker] Creating executable.							                                                  \n"
+
+sleep 1
+
 clear
 
 echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-echo -ne ":: Projcet setup completed.\n"
+echo -ne ":: Project setup completed.\n"
 echo -ne ":: Run the ${YELLOW}UFIX.exe${NO_COLOR} file to run the program.\n"
 echo -ne ":: Run this script again to update.\n\n\n\n"
 
