@@ -32,6 +32,9 @@ You'll need to make sure your program accounts for directory handling as the fil
 │       ├── recruitment
 |       |
 │       └── system
+|
+├── UFIX.exe
+├── [Databases]
 ```
 
 `system` is the main directory for the program. The `UFIX.exe` file will launch the mainGUI.py script in `system` - which will show the login page.
