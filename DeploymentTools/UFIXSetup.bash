@@ -1,31 +1,5 @@
 #!/bin/bash
 clear
-# Check if PWD is already a UFIX project.
-if [ -d "sources" ]; then
-  echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-  echo -ne ":: Warning\n\n\n"
-  echo -ne ":: A project already exists in this directory!\n"
-
-  echo -n "Do you want to overwrite this project (y/n)?"
-  read answer
-
-  if [ "$answer" != "${answer#[Yy]}" ] ;then
-    clear
-    echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-    echo -ne ":: Removing Existing Project\n"
-    rm -rf sources UFIX.exe
-	sleep 1
-  else
-    clear
-    echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
-    echo -ne ":: New Project Directory\n\n\n"
-	echo -ne ":: Creating a new project in " $PWD ".\n"
-	echo -ne ":: Please type in a project name, this will be the working folder for this project:\n"
-	read NEWDIR
-	mkdir $NEWDIR
-    cd $NEWDIR
-  fi
-fi
 
 # Utility stuff
 
@@ -44,6 +18,44 @@ AdminDir="System-Administration"
 UfixDir="Ufix-Program"
 
 PROJECT_SETUP=($BoardingDir $DisciplinaryDir $LeaveDir $PayrollDir $PIMDir $RecruitmentDir $AdminDir $UfixDir)
+
+# Check if PWD is already a UFIX project.
+if [ -d "sources" ]; then
+  echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
+  echo -ne ":: Warning\n\n\n"
+  echo -ne ":: A project already exists in this directory!\n:: If you require an update to your UFIX executable, overwrite the current project to update.\n"
+
+  echo -ne ":: Do you want to overwrite this project (y/n)?\n> "
+  read answer
+
+  if [ "$answer" != "${answer#[Yy]}" ] ;then
+    clear
+    echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
+    echo -ne ":: Removing Existing Project\n"
+    rm -rf sources UFIX.exe draft.s3db Ufix\ Database.s3db UfixAccounts.sqlite3 ufixRT.s3db
+	sleep 1
+  else
+    clear
+    echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
+    echo -ne ":: New Project Directory\n\n\n"
+	echo -ne ":: Creating a new project in " $PWD ".\n"
+	echo -ne ":: Please type in a project name, this will be the working folder for this project.\n:: To quit, type ::q.\n To cancel and overwrite the existing project, type ::cl\n> "
+	read NEWDIR
+	if [ $NEWDIR = "::q" ]; then
+		exit
+	elif [ $NEWDIR = "::cl"]; 
+	then
+		clear
+		echo -ne ":: ${YELLOW}UFIX Project Setup\n${CYAN}==============================================================\n\n${NO_COLOR}"
+		echo -ne ":: Removing Existing Project\n"
+		rm -rf sources UFIX.exe draft.s3db Ufix\ Database.s3db UfixAccounts.sqlite3 ufixRT.s3db
+		sleep 1
+	else
+		mkdir $NEWDIR
+		cd $NEWDIR
+	fi
+  fi
+fi
 
 # Pre script checks.
 
@@ -115,7 +127,7 @@ for Working in "${PROJECT_SETUP[@]}"
 do
 	echo -ne ":: Cleaning: ${YELLOW}" $Working "${NO_COLOR}                    \r\c\n"
 	cd $Working
-	rm -rfv .idea *.md .git
+	rm -rf .idea *.md .git
 	cd ..
 	sleep 0.05
 done
@@ -134,7 +146,7 @@ do
 	fi
 
 	echo -ne ":: Setting up: ${YELLOW}" $Working "${NO_COLOR}                        \r\c\n"
-	cp -rfv $Working $UfixDir
+	cp -rf $Working $UfixDir
 	sleep 0.25
 done
 
@@ -152,7 +164,7 @@ do
 	fi
 
 	echo -ne ":: Cleaning: ${YELLOW}" $Cleaning "${NO_COLOR}                          \r\c\n"
-	rm -rfv $Cleaning
+	rm -rf $Cleaning
 	sleep 0.25
 done
 
@@ -165,83 +177,92 @@ echo -ne ":: Preparing project structure...\n\n\n\n"
 sleep 0.3
 
 cd $UfixDir
-rm -fv LICENSE
-rm -fv .gitignore
+rm -f LICENSE
+rm -f .gitignore
 sleep 1
 
 if [ "$(ls -A $AdminDir)" ]; then
     echo -ne "[clWorker] Object: $AdminDir Op: moving required files.							                      \n"
     cd $AdminDir
-	mv -v UfixAccounts.sqlite3 ../../
+	mv UfixAccounts.sqlite3 ../../
 	cd DeploymentTools
-	mv -v UFIX.exe ../../../
+	mv UFIX.exe ../../../
 	cd ..
-	rm -rfv DeploymentTools
+	rm -rf DeploymentTools
 	cd ..
-	mv $AdminDir system
+	mv -v $AdminDir system
 else
     echo -ne  "[Warning] $AdminDir is empty... deleting.								                              \n"
-	rm -rfv $AdminDir
+	rm -rf $AdminDir
 fi
 
 sleep 1
 
 if [ "$(ls -A $BoardingDir)" ]; then
-    echo -ne  "[clWorker] Object: $BoardingDir Op: moving required files.							                  \n"
+    echo -ne  "\n[clWorker] Object: $BoardingDir Op: moving required files.							                  \n"
 	mv -v $BoardingDir boarding
 else
-    echo -ne  "[Warning] $BoardingDir is empty... deleting.								                              \n"
-	rm -rfv $BoardingDir
+    echo -ne  "\n[Warning] $BoardingDir is empty... deleting.								                              \n"
+	rm -rf $BoardingDir
 fi
 
 sleep 1
 
 if [ "$(ls -A $DisciplinaryDir)" ]; then
-    echo -ne  "[clWorker] Object: $DisciplinaryDir Op: moving required files.                                         \n"
-	mv $DisciplinaryDir disciplinary
+    echo -ne  "\n[clWorker] Object: $DisciplinaryDir Op: moving required files.                                         \n"
+	mv -v $DisciplinaryDir disciplinary
 else
-    echo -ne  "[Warning] $DisciplinaryDir is empty... deleting.                                                       \n"
-	rm -rfv $DisciplinaryDir
+    echo -ne  "\n[Warning] $DisciplinaryDir is empty... deleting.                                                       \n"
+	rm -rf $DisciplinaryDir
 fi
 
 sleep 1
 
 if [ "$(ls -A $LeaveDir)" ]; then
-    echo -ne  "[clWorker] Object: $LeaveDir Op: moving required files.							                      \n"
+    echo -ne  "\n[clWorker] Object: $LeaveDir Op: moving required files.	\n"
+	cd $LeaveDir
+	mv draft.s3db ../../
+	cd ..
 	mv -v $LeaveDir leave
 else
-    echo -ne  "[Warning] $LeaveDir is empty... deleting.								                              \n"
-	rm -rfv $LeaveDir
+    echo -ne  "\n[Warning] $LeaveDir is empty... deleting.								                              \n"
+	rm -rf $LeaveDir
 fi
 
 sleep 1
 
 if [ "$(ls -A $PayrollDir)" ]; then
-    echo -ne  "[clWorker] Object: $PayrollDir Op: moving required files.							                  \n"
+    echo -ne  "\n[clWorker] Object: $PayrollDir Op: moving required files.							                  \n"
+	cd $PayrollDir
+	mv Ufix\ Database.s3db ../../ 
+	cd ..
 	mv -v $PayrollDir payroll
 else
-    echo -ne  "[Warning] $PayrollDir is empty... deleting.								                              \n"
-	rm -rfv $PayrollDir
+    echo -ne  "\n[Warning] $PayrollDir is empty... deleting.								                              \n"
+	rm -rf $PayrollDir
 fi
 
 sleep 1
 
 if [ "$(ls -A $PIMDir)" ]; then
-    echo -ne  "[clWorker] Object: $PIMDir Op: moving required files.							                      \n"
+    echo -ne  "\n[clWorker] Object: $PIMDir Op: moving required files.							                      \n"
 	mv -v $PIMDir pim
 else
-    echo -ne  "[Warning] $PIMDir is empty... deleting.								                                  \n"
-	rm -rfv $PIMDir
+    echo -ne  "\n[Warning] $PIMDir is empty... deleting.								                                  \n"
+	rm -rf $PIMDir
 fi
 
 sleep 1
 
 if [ "$(ls -A $RecruitmentDir)" ]; then
-    echo -ne  "[clWorker] Object: $RecruitmentDir Op: moving required files.							              \n"
+    echo -ne  "\n[clWorker] Object: $RecruitmentDir Op: moving required files.							              \n"
+	cd $RecruitmentDir
+	mv ufixRT.s3db ../../
+	cd ..
 	mv -v $RecruitmentDir recruitment
 else
-    echo -ne  "[Warning] $RecruitmentDir is empty... deleting.								                          \n"
-	rm -rfv $RecruitmentDir
+    echo -ne  "\n[Warning] $RecruitmentDir is empty... deleting.								                          \n"
+	rm -rf $RecruitmentDir
 fi
 
 sleep 1
@@ -250,12 +271,12 @@ cd ..
 
 sleep 1
 
-echo -ne  "[clWorker] Creating sources directory.							                                          \n"
-mv -v $UfixDir python
-mkdir -v sources
-mv -v python ./sources
+echo -ne  "\n[clWorker] Creating sources directory.							                                          \n"
+mv $UfixDir python
+mkdir sources
+mv python ./sources
 
-echo -ne  "[clWorker] Creating executable.							                                                  \n"
+echo -ne  "\n[clWorker] Creating executable.							                                                  \n"
 
 sleep 1
 
