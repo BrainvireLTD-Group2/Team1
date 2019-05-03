@@ -39,7 +39,8 @@ class Application:
         self.btnExit.grid(row = 2, column = 2)
 
     def btnPolicy_clicked(self):
-        self.policytext = "This is a placeholder for the policy"
+        #hyperlink = tkHyperlinkManager
+        self.policytext = "Our policy can be found at: https://docs.google.com/document/d/1LCssLGaqYobsK6JB6hpTvRrgloTsW7zaNmlRHX0fLHU/edit"
         tk.messagebox.showinfo(title = "Ufix Policy Document", message = self.policytext)
 
     def btnLogin_clicked(self):
@@ -65,13 +66,21 @@ class DatabaseAccessor:
     def connect(self):
         connection = sqlite3.connect('UfixAccounts.sqlite3')
         self.cursor = connection.cursor()
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS `UfixAccounts`(`Username` TEXT NOT NULL, `Password` TEXT NOT NULL, PRIMARY KEY(`Username`))''')
+
+        #Removed to close any security implications if there isn't a database avaliable on the system.
+        #self.cursor.execute('''CREATE TABLE IF NOT EXISTS `UfixAccounts`(`Username` TEXT NOT NULL, `Password` TEXT NOT NULL, PRIMARY KEY(`Username`))''')
 
     def disconnect(self):
         self.connection.close()
     
     def verify(self, username, passwordhash):
-        self.cursor.execute("SELECT Username, Password FROM UfixAccounts WHERE Username=?", [username])
+
+        try:
+            self.cursor.execute("SELECT Username, Password FROM UfixAccounts WHERE Username=?", [username])
+        except Exception:
+            tk.messagebox.showerror(title = "Error", message = "Error accessing the UFIX database.  Check integrity?")
+            return False
+
         self.all_accounts = self.cursor.fetchall()
 
         for row in self.all_accounts:
