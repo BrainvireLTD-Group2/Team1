@@ -12,7 +12,7 @@ class test(TestCase):
         self.assertFalse(DatabaseAccessor.verify(self, username=username, passwordhash=password))
 
     def test_correct_password(self):
-        username = "username"
+        username = "Administrator"
         password = "password"
         DatabaseAccessor.connect(self)
         self.assertTrue(DatabaseAccessor.verify(self, username=username, passwordhash=password))
